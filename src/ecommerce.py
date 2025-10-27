@@ -9,3 +9,6 @@ class EcommerceAnalyzer:
     def rev_unit_count(self):
         return rev_unit_count(self.df)
     
+    def rev_per_category(self):
+        return NotImplemented
+    
