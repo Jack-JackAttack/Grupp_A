@@ -1,5 +1,7 @@
 import pandas as pd
 from .io_utiles import load_file
+from .metrics import (rev_unit_count)
+from .viz import (revenue_per_month)
 from .metrics import (rev_unit_count, rev_per_category)
 
 class EcommerceAnalyzer:
@@ -9,6 +11,8 @@ class EcommerceAnalyzer:
     def rev_unit_count(self):
         return rev_unit_count(self.df)
     
+    def rev_per_month_viz(self):
+        return revenue_per_month(self.df)
     def rev_per_category(self):
         return rev_per_category(self.df)
     
