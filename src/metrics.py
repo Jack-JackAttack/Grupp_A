@@ -14,7 +14,15 @@ def rev_unit_count(df: pd.DataFrame):                                           
 
 
 # def rev_per_category(df: pd.DataFrame):
-
+def rev_per_category(df: pd.DataFrame):
+    summary_df: pd.DataFrame = (df
+                                .groupby("category", observed=True)
+                                .agg(Revenue = ("revenue", "sum"),
+                                     Units = ("units", "sum"),
+                                     )
+                                .sort_values("Revenue", ascending=False)
+                                )
+    return summary_df
 
 # def aov_count(df: pd.DataFrame):
 
