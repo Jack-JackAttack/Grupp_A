@@ -18,6 +18,10 @@ def rev_unit_count(df: pd.DataFrame):                                           
 
 # def aov_count(df: pd.DataFrame):
 
+def per_order_revenue(df: pd.DataFrame) -> pd.DataFrame:
+
+    return NotImplemented
+
 def avg_revenue(df: pd.DataFrame) -> float:
     df_copy = df.copy()
     return float(df_copy["revenue"].mean())
