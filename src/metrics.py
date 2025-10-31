@@ -18,7 +18,14 @@ def rev_unit_count(df: pd.DataFrame):                                           
 
 # def aov_count(df: pd.DataFrame):
 
+def avg_revenue(df: pd.DataFrame) -> float:
+    df_copy = df.copy()
+    return float(df_copy["revenue"].mean())
+    
+    
+
 def aov_count(df: pd.DataFrame):
+
     return NotImplemented
 
 # def top_three(df: pd.DataFrame):
