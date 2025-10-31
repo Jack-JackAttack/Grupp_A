@@ -1,6 +1,6 @@
 import pandas as pd
 from .io_utiles import load_file
-from .metrics import (rev_unit_count)
+from .metrics import (rev_unit_count,aov_count)
 
 class EcommerceAnalyzer:
     def __init__(self, csv_path: str):
@@ -9,3 +9,5 @@ class EcommerceAnalyzer:
     def rev_unit_count(self):
         return rev_unit_count(self.df)
     
+    def aov_count(self):
+        return NotImplemented
