@@ -6,19 +6,20 @@ def load_file(csv_path: str):
     df_clean = df.dropna().drop_duplicates().reset_index(drop=True)
     return df_clean
 
-def check_revenue_correct(df: pd.DataFrame, fix: bool = False):
+def check_revenue_correct(df: pd.DataFrame, fix: bool = False, tol: float = 0.01):
 
     """
     Control if revenue is price * units.
     fix will take price * units and make it the revenue.
     Make fix true if you want to fix any mistakes in original data.
+    tol = tolerance: defult set to 0.01 can change  but usually not needed
     """
 
     df_copy = df.copy()
     df_copy["calculated_revenue"] = (df_copy["price"] * df_copy["units"]).round(2)
 
     mismatches = df_copy.loc[
-                             df_copy["revenue"].round(2) != df_copy["calculated_revenue"].round(2),
+                             (df_copy["revenue"].round(2) - df_copy["calculated_revenue"]).abs() > tol,
                              ["order_id", "price", "units", "revenue", "calculated_revenue"]
                             ]
     if fix:
