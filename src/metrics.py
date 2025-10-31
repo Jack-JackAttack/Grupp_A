@@ -18,15 +18,23 @@ def rev_unit_count(df: pd.DataFrame):                                           
 
 # def aov_count(df: pd.DataFrame):
 
-def per_order_revenue(df: pd.DataFrame) -> pd.DataFrame:
+def per_order_id_revenue(df: pd.DataFrame) -> pd.DataFrame:
 
-    
-
-    return NotImplemented
+    per_order_id : pd.DataFrame = (df
+                                .groupby("order_id", observed=True)
+                                .agg(Revenue = ("revenue", "sum"),
+                                     Units = ("units", "sum"),
+                                     )
+                                .sort_values("Revenue", ascending=False)
+                                )
+    return per_order_id 
 
 def avg_revenue(df: pd.DataFrame) -> float:
     df_copy = df.copy()
-    return float(df_copy["revenue"].mean())
+    (df_copy
+     .groupby("")
+    )
+    return NotImplemented
     
     
 
