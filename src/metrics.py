@@ -18,32 +18,32 @@ def rev_unit_count(df: pd.DataFrame):                                           
 
 # def aov_count(df: pd.DataFrame):
 
-def rev_order_id_count(df: pd.DataFrame) -> pd.DataFrame:
-    summary_df: pd.DataFrame = (df
-                                .groupby("order_id", observed=True)
-                                .agg(Order_Revenue = ("revenue", "sum"),
-                                     Order_Units = ("units", "sum"),
-                                    )
-                                )
-    return summary_df
+# Count total revenue across and amount of unit sold and Revenue / Units across the board
+def rev_count(df: pd.DataFrame) -> pd.DataFrame:
 
-def per_category_revenue(df: pd.DataFrame) -> pd.DataFrame:
+    total_revenue = float(df["revenue"].sum())
+    total_units = int(df["units"].sum())
+    revenue_per_units = round( total_revenue / total_units, 2) if total_units != 0 else None
 
-    per_category : pd.DataFrame = (df
-                                .groupby("category", observed=True)
-                                .agg(Revenue = ("revenue", "sum"),
-                                     Units = ("units", "sum"),
-                                     )
-                                .sort_values("Revenue", ascending=False)
-                                )
-    return per_category 
+    summary_rev = {
+        "Revenue_Total": total_revenue,
+        "Units_Total": total_units,
+        "Revenue_Per_Units": revenue_per_units
+    }
+    return pd.DataFrame([summary_rev])
+
+# Show the total, mean, median, std, min, max of all the Revenue
+def rev_summery(df: pd.DataFrame) -> pd.DataFrame:
+    rev_summery = df["revenue"].agg(["sum", "mean", "median", "std", "min", "max"])
+    return rev_summery
+
     
-    
-
+# Show the Total, Mean, Median, Std, Min, Max per category of revenue
 def rev_summery_per_catagory(df: pd.DataFrame) -> pd.DataFrame:
     rev_summery_per_catagory = df.groupby("category")["revenue"].agg(["sum", "mean", "median", "std", "min", "max"])
     return rev_summery_per_catagory
 
+# Show Total Revenue and Units sold per Category with the Revenue / Unit per Category
 def rev_category_per_unit(df: pd.DataFrame) -> pd.DataFrame:
     category_revenue: pd.DataFrame = (df
                                 .groupby("category", observed=True)
