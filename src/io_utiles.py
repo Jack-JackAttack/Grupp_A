@@ -18,9 +18,10 @@ def check_revenue_correct(df: pd.DataFrame, fix: bool = False, tol: float = 0.01
 
     df_copy = df.copy()
     
-    # Check if either Price or Unit´s is empty and if they are replace with pandas NaN
-    df_copy[["price", "units"]] = df_copy[["price", "units"]].replace("", pd.NA)
-
+    # check if "price" "units" "revenue" is number and try to convert string to number, if it cant it makes it NA
+    for col in ["price", "units", "revenue"]:
+        df_copy[col] = pd.to_numeric(df_copy[col], errors="coerce")
+    
     # Make a calculated revenue to check if revenue is correct by useing price * units
     df_copy["calculated_revenue"] = (df_copy["price"] * df_copy["units"]).round(2)
 
