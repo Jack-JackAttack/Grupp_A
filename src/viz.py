@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from .metrics import (rev_per_city)
 
+# Visualizes total revenue per month.
 def revenue_per_month(df: pd.DataFrame):
 
     df_month = df.groupby(df["date"].dt.month)["revenue"].sum()
@@ -15,7 +16,7 @@ def revenue_per_month(df: pd.DataFrame):
     return ax
 
 
-
+# Visualizes total revenue per city.
 def revenue_per_city_viz(df):
 
     sorted_cities = rev_per_city(df)
