@@ -4,10 +4,9 @@ from .metrics import (rev_per_city)
 
 def revenue_per_month(df: pd.DataFrame):
 
-    df["date"] = pd.to_datetime(df["date"])
     df_month = df.groupby(df["date"].dt.month)["revenue"].sum()
     fig, ax = plt.subplots()
-    ax.plot(df_month.index, df_month.values)
+    ax.plot(df_month.index, df_month.values, marker="o", linestyle="--")
     ax.set_title("Försäljning per månad 2024")
     ax.set_xlabel("Månad")
     ax.set_ylabel("Intäkt")

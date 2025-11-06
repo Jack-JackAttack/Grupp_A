@@ -1,7 +1,7 @@
 import pandas as pd
 
-
-def rev_unit_count(df: pd.DataFrame):                                           # Skapar en ny df som är grupperad efter städer som lägger till revenue och units från huvudfilen, sorterad på revenue.
+# Creates a new df grouped by cities, total revenue and total units, sorted by revenue.
+def rev_unit_count(df: pd.DataFrame) -> pd.DataFrame:
     summary_df: pd.DataFrame = (df
                                 .groupby("city", observed=True)
                                 .agg(Revenue = ("revenue", "sum"),
@@ -11,10 +11,8 @@ def rev_unit_count(df: pd.DataFrame):                                           
                                 )
     return summary_df
 
-
-
-# def rev_per_category(df: pd.DataFrame):
-def rev_per_category(df: pd.DataFrame):
+# Creates a new df that returns total revenue, total units per category.
+def rev_per_category(df: pd.DataFrame) -> pd.DataFrame:
     summary_df: pd.DataFrame = (df
                                 .groupby("category", observed=True)
                                 .agg(Revenue = ("revenue", "sum"),
@@ -24,17 +22,14 @@ def rev_per_category(df: pd.DataFrame):
                                 )
     return summary_df
 
-
-
-def rev_per_city(df):
-    sorted_cities = (df.groupby("city", observed=True)
+# Creates a df of cities and total revenue per city, sorted by revenue.
+def rev_per_city(df: pd.DataFrame) -> pd.DataFrame:
+    sorted_cities: pd.DataFrame = (df.groupby("city", observed=True)
                    .agg(Revenue = ("revenue", "sum"))
                    .sort_values("Revenue", ascending=False)
                    )
     return sorted_cities
 
-
-# def aov_count(df: pd.DataFrame):
 # Count total revenue across and amount of unit sold and Revenue / Units across the board
 def rev_count(df: pd.DataFrame) -> pd.DataFrame:
 
@@ -54,7 +49,6 @@ def rev_summery(df: pd.DataFrame) -> pd.DataFrame:
     rev_summery = df["revenue"].agg(["sum", "mean", "median", "std", "min", "max"])
     return rev_summery
 
-    
 # Show the Total, Mean, Median, Std, Min, Max per category of revenue
 def rev_summery_per_catagory(df: pd.DataFrame) -> pd.DataFrame:
     rev_summery_per_catagory = df.groupby("category")["revenue"].agg(["sum", "mean", "median", "std", "min", "max"])
@@ -73,10 +67,17 @@ def rev_category_per_unit(df: pd.DataFrame) -> pd.DataFrame:
 
     return category_revenue
 
-# def top_three(df: pd.DataFrame):
+# Creates a new df with outliers based on category, if no category is written units will be used as default.
+def rev_outliers(df: pd.DataFrame, x: str = "units") -> pd.DataFrame:               #
+    if x not in df.columns:
+        raise ValueError(f"{x} finns inte i listan, angre rätt kolumn: {", ".join(df.columns)}")
 
+    Q1 = df[x].quantile(0.25)
+    Q3 = df[x].quantile(0.75)
+    IQR = Q3 - Q1
 
-# def rev_by_month(df: pd.DataFrame):
+    low = Q1 - 1.5 * IQR
+    high = Q3 + 1.5 * IQR
 
-
-# def rev_outliers(df: pd.DataFrame):
+    outliers_df= df[(df[x] < low) | (df[x] > high)]
+    return outliers_df.sort_values(x, ascending=False)
