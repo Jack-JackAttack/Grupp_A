@@ -51,7 +51,16 @@ def rev_summery(df: pd.DataFrame) -> pd.DataFrame:
 
 # Show the Total, Mean, Median, Std, Min, Max per category of revenue
 def rev_summery_per_catagory(df: pd.DataFrame) -> pd.DataFrame:
-    rev_summery_per_catagory = df.groupby("category")["revenue"].agg(["sum", "mean", "median", "std", "min", "max"])
+    rev_summery_per_catagory = (df
+                                .groupby("category")["revenue"]
+                                .agg(["sum",
+                                      "mean",
+                                      "median",
+                                      "std",
+                                      "min",
+                                      "max"]
+                                      )
+                                ).round(2)
     return rev_summery_per_catagory
 
 # Show Total Revenue and Units sold per Category with the Revenue / Unit per Category
@@ -68,7 +77,7 @@ def rev_category_per_unit(df: pd.DataFrame) -> pd.DataFrame:
     return category_revenue
 
 # Creates a new df with outliers based on category, if no category is written units will be used as default.
-def rev_outliers(df: pd.DataFrame, x: str = "units") -> pd.DataFrame:               #
+def rev_outliers(df: pd.DataFrame, x: str = "units") -> pd.DataFrame:
     if x not in df.columns:
         raise ValueError(f"{x} finns inte i listan, angre rätt kolumn: {", ".join(df.columns)}")
 
