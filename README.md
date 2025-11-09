@@ -17,7 +17,7 @@
 **Skapa .venv med python 3.13.7**
 - Installera requirements.txt för att få alla tillägg.
   
-  pip install -r requirements.txt
+  python -m pip install -r requirements.txt
 
 **Roller/ansvarsområden**
 - Försökt sprida ut arbetet så alla har haft möjligheten att använda github fullt ut, med issues/pulls och använt personliga branches.
@@ -32,3 +32,4 @@ Medlemmar:
 - Marcus Stefan Bäckström
 - Nils Ragnar Alexander Ahl
 ##
+
